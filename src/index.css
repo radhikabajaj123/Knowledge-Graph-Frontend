@@ -48,7 +48,7 @@ code {
   color: #000000;
 } */
 
-/*-------------CustomTabPanel--------------*/
-.myform {
-  background-color: #F4F1F1;
+/*-------------HorizontalTabPanel--------------*/
+.form .horizontaltabpanel {
+  background-color: #F2F1F1;
 }

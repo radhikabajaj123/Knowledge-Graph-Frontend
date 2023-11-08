@@ -1,5 +1,5 @@
 body {
-  background: #FFFDFD;
+  background: #F4F1F1;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -17,7 +17,7 @@ code {
 /*-----------Navigation----------*/
 .navbar {
   container: fluid;
-  background-color: #F4F1F1;
+  background-color: #FFFDFD;
 }
 
 .navbar-content {
@@ -25,3 +25,24 @@ code {
   width: 65%;
   height: 65%;
 }
+
+/*-------------Form--------------*/
+.myform {
+  padding: 60px 100px;
+  border-bottom: #000000;
+}
+
+/* .myform-tabs {
+  background-color: #F2F1F1;
+  color: #F96900;
+}
+
+.form ul > li > a {
+  background-color: #F2F1F1;
+  color: #000000;
+}
+
+.form ul > li > a:hover {
+  background-color: #D2D2D2;
+  color: #000000;
+} */

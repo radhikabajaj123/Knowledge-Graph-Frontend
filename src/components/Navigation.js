@@ -6,10 +6,10 @@ const Navigation = () => {
     return (
         <div className="Navigation">
           <Navbar sticky="top">
-                  <Navbar.Brand>
-                        <Link to ="/"><img className='navbar-content' src={logo}/></Link>
-                </Navbar.Brand>
-            </Navbar>
+              <Navbar.Brand>
+                  <Link to ="/"><img className='navbar-content' src={logo}/></Link>
+              </Navbar.Brand>
+          </Navbar>
         </div>
       )
 }

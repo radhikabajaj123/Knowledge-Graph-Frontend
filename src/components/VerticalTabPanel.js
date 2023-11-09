@@ -4,9 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/system/Stack';
+import Form from '../components/Form.js'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -68,22 +66,8 @@ export default function VerticalTabs() {
         <Tab label="Get BFS" {...a11yProps(4)} />
         <Tab label="Get DFS" {...a11yProps(5)} />
       </Tabs>
-      <TabPanel value={value} index={0}>
-        <Box
-        component="form"
-        sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-        >
-        
-            <Stack spacing={4}>
-                <TextField id="filled-basic" label="Import Id" variant="filled" />
-                <Button variant="contained">Submit</Button>
-            </Stack>
-        
-        </Box>
+    <TabPanel value={value} index={0}>
+        <Form/>
     </TabPanel>
       <TabPanel value={value} index={1}>
         Get Node by Name

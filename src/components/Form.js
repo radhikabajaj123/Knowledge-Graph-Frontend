@@ -16,7 +16,7 @@ const Form = ({nodes, setNodes}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch(`http://localhost:9092/get-node?id=${importId}`)
+        fetch(`http://localhost:9092/get-node-by-importId?importId=${importId}`)
         .then((res) => res.json())
         .then((data) => {
             setNodes([{

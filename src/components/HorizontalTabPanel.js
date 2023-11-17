@@ -39,7 +39,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs({nodes, setNodes}) {
+export default function BasicTabs({graph, setGraph}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -57,7 +57,7 @@ export default function BasicTabs({nodes, setNodes}) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <VerticalTabPanel nodes={nodes} setNodes={setNodes}/>
+        <VerticalTabPanel graph={graph} setGraph={setGraph}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <VerticalTabPanel/>

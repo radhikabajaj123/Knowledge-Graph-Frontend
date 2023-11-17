@@ -1,10 +1,10 @@
 import Card from '../components/Card'
 import Box from '@mui/material/Box';
 
-const OutputWindow = ({nodes}) => {
+const OutputWindow = ({graph}) => {
     return (
         <Box sx={{p: 8}}>
-            <Card nodes={nodes}/>
+            <Card graph={graph}/>
         </Box>
     )
 }

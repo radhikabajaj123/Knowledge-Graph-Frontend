@@ -18,14 +18,6 @@ export function runForceGraph(
 
   const color = () => { return "#9D79A0"; };
 
-  const icon = (d) => {
-    return d.gender === "male" ? "\uf222" : "\uf221";
-  }
-
-  const getClass = (d) => {
-    return d.gender === "male" ? styles.male : styles.female;
-  };
-
   const drag = (simulation) => {
     const dragstarted = (d) => {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -124,8 +116,7 @@ export function runForceGraph(
     .append("text")
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'central')
-    .attr("class", d => `fa ${getClass(d)}`)
-    .text(d => {return d.labels;})
+    .text(d => {return d.id;})
     .call(drag(simulation));
 
   label.on("mouseover", (d) => {

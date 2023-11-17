@@ -1,11 +1,11 @@
 import HorizontalTabPanel from './HorizontalTabPanel';
 import Box from '@mui/material/Box';
 
-const InputWindow = ({nodes, setNodes}) => {
+const InputWindow = ({graph, setGraph}) => {
 
     return (
         <Box sx={{p: 8}}>
-            <HorizontalTabPanel nodes={nodes} setNodes={setNodes}/>
+            <HorizontalTabPanel graph={graph} setGraph={setGraph}/>
         </Box>
     )
 

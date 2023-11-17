@@ -4,10 +4,8 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/system/Stack';
 import Button from '@mui/material/Button';
 import { useState} from 'react';
-import Graph from '../components/Graph';
-import OutputWindow from './OutputWindow';
 
-const Form = ({nodes, setNodes}) => {
+const Form = ({graph, setGraph}) => {
     const [importId, setImportId] = useState('');
 
     const handleChange = (event) => {
@@ -19,13 +17,12 @@ const Form = ({nodes, setNodes}) => {
         fetch(`http://localhost:9092/get-node-by-importId?importId=${importId}`)
         .then((res) => res.json())
         .then((data) => {
-            setNodes([{
-                identity: data.identity,
-                labels: data.labels,
-                properties: data.properties
-            }]);
-            setImportId('');
-            console.log(nodes);
+            setGraph({
+                nodes: data.nodes,
+                links: data.links
+            });
+            setImportId(''); 
+            console.log(graph);                                
         })
         .catch((err) => {
             console.log(err.message);

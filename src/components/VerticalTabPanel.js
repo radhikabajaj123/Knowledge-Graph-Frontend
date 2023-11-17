@@ -39,7 +39,7 @@ function a11yProps(index) {
   };
 }
 
-export default function VerticalTabs({nodes, setNodes}) {
+export default function VerticalTabs({graph, setGraph}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -67,7 +67,7 @@ export default function VerticalTabs({nodes, setNodes}) {
         <Tab label="Get DFS" {...a11yProps(5)} />
       </Tabs>
     <TabPanel value={value} index={0}>
-        <Form nodes={nodes} setNodes={setNodes}/>
+        <Form graph={graph} setGraph={setGraph}/>
     </TabPanel>
       <TabPanel value={value} index={1}>
         Get Node by Name

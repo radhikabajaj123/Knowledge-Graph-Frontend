@@ -3,11 +3,11 @@ import OutputWindow from "../components/OutputWindow";
 import {useState} from 'react';
 
 const Home = () => {
-    const [nodes, setNodes] = useState([])
+    const [graph, setGraph] = useState({})
     return (
         <div className="Home">
-            <InputWindow nodes={nodes} setNodes={setNodes}/>
-            <OutputWindow nodes={nodes}/>
+            <InputWindow graph={graph} setGraph={setGraph}/>
+            <OutputWindow graph={graph}/>
         </div>
     )
 }

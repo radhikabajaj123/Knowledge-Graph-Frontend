@@ -8,12 +8,12 @@ export function ForceGraph({ linksData, nodesData, nodeHoverTooltip }) {
   React.useEffect(() => {
     let destroyFn;
 
-    if (linksData && nodesData) {
+    
       if (containerRef.current) {
+        runForceGraph(containerRef.current, linksData, nodesData, nodeHoverTooltip);
         const { destroy } = runForceGraph(containerRef.current, linksData, nodesData, nodeHoverTooltip);
         destroyFn = destroy;
       }
-    }
 
     return destroyFn;
   }, []);

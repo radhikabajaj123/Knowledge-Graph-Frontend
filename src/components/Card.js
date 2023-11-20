@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { ForceGraph } from "../components/ForceGraph";
 import Data from '../components/Data.json';
+import NetworkDiagramGenerator from './NetworkDiagramGenerator';
 
 const bull = (
   <Box
@@ -22,7 +23,8 @@ export default function BasicCard({graph}) {
         return (
             <Card sx={{ minWidth: 275 }} style={{backgroundColor: "#F2F1F1"}}>
               <CardContent>
-                    <ForceGraph linksData={graph.links} nodesData={graph.nodes} nodeHoverTooltip={nodeHoverTooltip} graph={graph}/>
+                    <NetworkDiagramGenerator graph={graph}/>
+                    {/* <ForceGraph linksData={graph.links} nodesData={graph.nodes} nodeHoverTooltip={nodeHoverTooltip} graph={graph}/> */}
               </CardContent>
             </Card>
           );

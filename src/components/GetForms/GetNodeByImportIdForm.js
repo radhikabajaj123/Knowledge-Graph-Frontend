@@ -5,7 +5,7 @@ import Stack from '@mui/system/Stack';
 import Button from '@mui/material/Button';
 import { useState, useEffect} from 'react';
 
-const Form = ({graph, setGraph}) => {
+const GetNodeByImportIdForm = ({graph, setGraph}) => {
     const [importId, setImportId] = useState('');
     const [error, setError] = useState('');
 
@@ -77,4 +77,4 @@ const Form = ({graph, setGraph}) => {
   )
 }
 
-export default Form;
+export default GetNodeByImportIdForm;

@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import VerticalTabPanel from '../components/VerticalTabPanel'
+import VerticalTabPanel from './VerticalTabPanels/GetVerticalTabPanel'
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;

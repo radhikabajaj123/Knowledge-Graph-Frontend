@@ -5,6 +5,10 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Form from '../components/Form.js'
+import GetGraphForm from './GetForms/GetGraphForm.js';
+import GetNodeByNameForm from './GetForms/GetNodeByNameForm.js';
+import GetNodesByLabelForm from './GetForms/GetNodesByLabelForm.js';
+import GetSiblingsByImportIdForm from './GetForms/GetSiblingsByImportIdForm.js';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,27 +66,23 @@ export default function VerticalTabs({graph, setGraph}) {
         <Tab label="Get Node by Import Id" {...a11yProps(0)} />
         <Tab label="Get Node by Name" {...a11yProps(1)} />
         <Tab label="Get Nodes by Label" {...a11yProps(2)} />
-        <Tab label="Get Children" {...a11yProps(3)} />
-        <Tab label="Get BFS" {...a11yProps(4)} />
-        <Tab label="Get DFS" {...a11yProps(5)} />
+        <Tab label="Get Siblings" {...a11yProps(3)} />
+        <Tab label="Get Graph" {...a11yProps(4)} />
       </Tabs>
     <TabPanel value={value} index={0}>
         <Form graph={graph} setGraph={setGraph}/>
     </TabPanel>
       <TabPanel value={value} index={1}>
-        Get Node by Name
+        <GetNodeByNameForm graph={graph} setGraph={setGraph}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Get Nodes by Label
+        <GetNodesByLabelForm graph={graph} setGraph={setGraph}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Get Children
+        <GetSiblingsByImportIdForm graph={graph} setGraph={setGraph}/>
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Get BFS
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        Get DFS
+        <GetGraphForm graph={graph} setGraph={setGraph}/>
       </TabPanel>
     </Box>
   );

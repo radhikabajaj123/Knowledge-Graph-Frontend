@@ -13,7 +13,7 @@ const bull = (
   </Box>
 );
 
-export default function BasicCard({graph, setGraph}) {
+export default function BasicCard({graph}) {
     const nodeHoverTooltip = React.useCallback((node) => {
         return `<div>${node.name}</div>`;
       }, []);
@@ -22,7 +22,7 @@ export default function BasicCard({graph, setGraph}) {
         return (
             <Card sx={{ minWidth: 275 }} style={{backgroundColor: "#F2F1F1"}}>
               <CardContent>
-                    <ForceGraph linksData={graph.links} nodesData={graph.nodes} nodeHoverTooltip={nodeHoverTooltip}/>
+                    <ForceGraph linksData={graph.links} nodesData={graph.nodes} nodeHoverTooltip={nodeHoverTooltip} graph={graph}/>
               </CardContent>
             </Card>
           );

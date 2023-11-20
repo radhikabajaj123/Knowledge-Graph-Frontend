@@ -60,13 +60,13 @@ export default function BasicTabs({graph, setGraph}) {
         <VerticalTabPanel graph={graph} setGraph={setGraph}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <VerticalTabPanel/>
+        <VerticalTabPanel graph={graph} setGraph={setGraph}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <VerticalTabPanel/>
+        <VerticalTabPanel graph={graph} setGraph={setGraph}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <VerticalTabPanel/>
+        <VerticalTabPanel graph={graph} setGraph={setGraph}/>
       </CustomTabPanel>
     </Box>
   );

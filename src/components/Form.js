@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/system/Stack';
 import Button from '@mui/material/Button';
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 
 const Form = ({graph, setGraph}) => {
     const [importId, setImportId] = useState('');
@@ -15,38 +15,39 @@ const Form = ({graph, setGraph}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+        setError('');
         const response = await fetch(`http://localhost:9092/get-node-by-importId?importId=${importId}`);
+
         if (response.ok) {
-            setError('');
             const data = await response.json();
             setGraph({
                 nodes: data.nodes,
                 links: data.links
-            })
-            setImportId('');
-            console.log(graph);
+            });
+            setImportId(''); 
+            console.log(graph);    
+        } else {
+            setError("Invalid Input!")
         }
-            
-         else {
-            setError("Invalid input!");
-        }
-        // await fetch(`http://localhost:9092/get-node-by-importId?importId=${importId}`)
-        // .then((res) => res.json())
-        // .then((data) => {
-        //     setGraph({
-        //         nodes: data.nodes,
-        //         links: data.links
-        //     });
-        //     setImportId(''); 
-        //     console.log(graph);                                
-        // })
-        // .catch((err) => {
-        //     setError('Invalid input!');
-        //     console.log("Error!");
-        //     console.log(err.message);
-        // })
     }
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setError('');
+        
+    //     const response = await fetch(`http://localhost:9092/get-node-by-importId?importId=${importId}`);
+    //     if (response.ok) {
+    //         const data = await response.json();
+    //         setGraph({
+    //             nodes: data.nodes,
+    //             links: data.links
+    //         })
+    //         setImportId('');
+    //         console.log(graph);
+    //     }
+    //      else {
+    //         setError("Invalid input!");
+    //     }
+    // }
 
   return (
     <div className="form">

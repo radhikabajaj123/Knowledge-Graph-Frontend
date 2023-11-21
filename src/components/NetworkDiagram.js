@@ -1,7 +1,6 @@
 import * as d3 from 'd3';
 import { useEffect, useRef } from 'react';
 import DrawNetwork from './DrawNetwork';
-import Data from './Data.json';
 
 export const NetworkDiagram = ({graph, width, height}) => {
   // The force simulation mutates links and nodes, so create a copy first

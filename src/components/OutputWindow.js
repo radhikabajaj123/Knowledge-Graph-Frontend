@@ -5,12 +5,15 @@ import React, { useRef } from "react";
 
 
 const OutputWindow = ({graph}) => {
-    
+    const nodeHoverTooltip = React.useCallback((node) => {
+        return `<div>${node.name}</div>`;
+      }, []);
+
     if (graph.links && graph.nodes){
         return (
             <Box sx={{p: 8}}>
-                <Box style={{backgroundColor: "#F2F1F1"}} ref={useRef}>
-                        <NetworkDiagramGenerator graph={graph} width={1000} height={1000}/>
+                <Box style={{backgroundColor: "#F4F1F1"}}>
+                        <NetworkDiagramGenerator graph={graph} width={1300} height={1500}/>
                 </Box>
             </Box>
             

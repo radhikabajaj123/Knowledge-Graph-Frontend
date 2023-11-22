@@ -18,11 +18,11 @@ const useDimensions = (targetRef) => {
     useEffect(() => {
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
-    }, [targetRef]);
+    }, []);
   
     useLayoutEffect(() => {
       handleResize();
-    }, [targetRef]);
+    }, []);
   
     return dimensions;
   }

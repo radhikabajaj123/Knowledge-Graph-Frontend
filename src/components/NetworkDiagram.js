@@ -1,15 +1,19 @@
 import * as d3 from 'd3';
 import { useEffect, useRef } from 'react';
 import DrawNetwork from './DrawNetwork';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 export const NetworkDiagram = ({graph, width, height}) => {
   // The force simulation mutates links and nodes, so create a copy first
   // Node positions are initialized by d3
-  const RADIUS = 10;
+  const RADIUS = 40;
   const links = graph.links.map((d) => ({ ...d }));
   const nodes = graph.nodes.map((d) => ({ ...d }));
 
+
+
   const canvasRef = useRef(null);
+  
 
   useEffect(() => {
     // set dimension of the canvas element
@@ -38,17 +42,24 @@ export const NetworkDiagram = ({graph, width, height}) => {
       });
   }, [width, height, nodes, links]);
 
-  return (
-    <div>
-      <canvas
-        ref={canvasRef}
-        style={{
-          width,
-          height,
-        }}
-        width={width}
-        height={height}
-      />
-    </div>
-  );
+    
+    return (
+        <TransformWrapper>
+            <TransformComponent>
+                <div>
+                <canvas
+                    ref={canvasRef}
+                    style={{
+                    width: width,
+                    height: height,
+                    backgroundColor: "#F2F1F1"
+                    }}
+                    width={width}
+                    height={height}
+                />
+                </div>
+            </TransformComponent>
+        </TransformWrapper>
+        
+    );
 };

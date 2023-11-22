@@ -1,10 +1,11 @@
 import { NetworkDiagram } from './NetworkDiagram';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-const NetworkDiagramGenerator = ({graph, width = 700, height = 400}) => {
-  if (width === 0) {
-    return null;
-  }
-  return <NetworkDiagram graph={graph} width={width} height={height} />;
+const NetworkDiagramGenerator = ({graph, width, height}) => {
+
+  return (
+        <NetworkDiagram graph={graph} width={width} height={height}/>
+  );
 }
 
 export default NetworkDiagramGenerator;

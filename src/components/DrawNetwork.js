@@ -18,8 +18,12 @@ const drawNetwork = (context, width, height, nodes, links, RADIUS) => {
     context.beginPath();
     context.moveTo(node.x + RADIUS, node.y);
     context.arc(node.x, node.y, RADIUS, 0, 2 * Math.PI);
-    context.fillStyle = '#cb1dd1';
+    context.fillStyle = '#F96900';
     context.fill();
+    context.fillStyle = '#000000';
+    context.font = "bolder 20px serif";
+    context.textAlign = 'center';
+    context.fillText(node.properties.neo4jImportId, node.x, node.y);
   });
 };
 

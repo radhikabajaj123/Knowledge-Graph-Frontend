@@ -1,22 +1,22 @@
-import React from "react";
-import { runForceGraph } from "../components/ForceGraphGenerator";
-import styles from "../components/ForceGraph.css";
+// import React from "react";
+// import { RunForceGraph } from "../components/ForceGraphGenerator";
+// import styles from "../components/ForceGraph.css";
 
-export function ForceGraph({ linksData, nodesData, nodeHoverTooltip, graph }) {
-  const containerRef = React.useRef(null);
+// export function ForceGraph({ linksData, nodesData, graph}) {
+//   const containerRef = React.useRef(null);
 
-  React.useEffect(() => {
-    let destroyFn;
+//   React.useEffect(() => {
+//     let destroyFn;
 
     
-      if (containerRef.current) {
-        runForceGraph(containerRef.current, linksData, nodesData, nodeHoverTooltip);
-        const { destroy } = runForceGraph(containerRef.current, linksData, nodesData, nodeHoverTooltip);
-        destroyFn = destroy;
-      }
+//       if (containerRef.current) {
+//         RunForceGraph(containerRef.current, linksData, nodesData);
+//         const { destroy } = RunForceGraph(containerRef.current, linksData, nodesData);
+//         destroyFn = destroy;
+//       }
 
-    return destroyFn;
-  }, [graph]);
+//     return destroyFn;
+//   }, [graph]);
 
-  return <div ref={containerRef} className={styles.container}/>;
-}
+//   return <div ref={containerRef} className={styles.container}/>;
+// }

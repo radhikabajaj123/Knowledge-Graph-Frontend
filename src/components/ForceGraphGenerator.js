@@ -2,18 +2,21 @@
 import * as d3 from "d3";
 import styles from "../components/ForceGraph.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
-export const RunForceGraph = ( graph ) => { 
+export const RunForceGraph = ( {graph} ) => { 
   const d3Container = useRef(null);
 
   const height = 1200;
   const width = 1200; 
-  useEffect(() => { 
+
+  useLayoutEffect(() => { 
     
-    if (graph.graph.links && graph.graph.nodes) {
-      const links = graph.graph.links.map((d) => Object.assign({}, d));
-      const nodes = graph.graph.nodes.map((d) => Object.assign({}, d));
+    if (graph.links && graph.nodes) {
+
+
+      const links = graph.links.map((d) => Object.assign({}, d));
+      const nodes = graph.nodes.map((d) => Object.assign({}, d));
 
       
       // var parentDiv = document.getElementById("parentDiv");
@@ -23,7 +26,7 @@ export const RunForceGraph = ( graph ) => {
 
       const drag = (simulation) => {
         const dragstarted = (d) => {
-          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+          if (!d3.event.active) simulation.alpha(0.3).restart();
           d.fx = d.x;
           d.fy = d.y;
         };
@@ -34,7 +37,7 @@ export const RunForceGraph = ( graph ) => {
         };
 
         const dragended = (d) => {
-          if (!d3.event.active) simulation.alphaTarget(0);
+          if (!d3.event.active) simulation.alpha(0).restart();
           d.fx = null;
           d.fy = null;
         };
@@ -48,26 +51,27 @@ export const RunForceGraph = ( graph ) => {
       
       const simulation = d3
         .forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-        .force("charge", d3.forceManyBody().strength(-600))
+        .force("link", d3.forceLink(links).id(d => d.id).distance(200))
+        .force("charge", d3.forceManyBody().strength(-1000))
         .force("collide", d3.forceCollide().strength(1).radius(30).iterations(1))
         .force("x", d3.forceX())
         .force("y", d3.forceY());
+
+        
         
       const svg = d3
         .select(d3Container.current)
-        .attr("viewBox", [-width / 2, -height / 2, width, height])
         .call(d3.zoom().on("zoom", function () {
           svg.attr("transform", d3.event.transform);
       }));
 
+      svg.selectAll("*").remove();
+
       const updateLink = svg
         .append("g")
         .selectAll("line")
-        .data(links);
-      
-      updateLink.enter()
-        .append("line")
+        .data(links)
+        .join("line")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
         .attr("stroke-width", d => Math.sqrt(d.value));
@@ -75,10 +79,8 @@ export const RunForceGraph = ( graph ) => {
       const updateNode = svg
         .append("g")
         .selectAll("circle")
-        .data(nodes);
-
-      updateNode.enter()
-        .append("circle")
+        .data(nodes)
+        .join("circle")
         .attr("stroke", "#fff")
         .attr("stroke-width", 2)
         .attr("r", 24)
@@ -88,11 +90,8 @@ export const RunForceGraph = ( graph ) => {
       const updateLabel = svg
         .append("g")
         .selectAll("text")
-        .data(nodes);
-
-      updateLabel
-        .enter()
-        .append("text")
+        .data(nodes)
+        .join("text")
         .attr("class", "labels")
         .attr('text-anchor', 'middle')
         .attr('dominant-baseline', 'central')
@@ -125,12 +124,15 @@ export const RunForceGraph = ( graph ) => {
           .attr("x", d => { return d.x; })
           .attr("y", d => { return d.y; })
       });
-
-      updateLink.exit().remove();
-      updateNode.exit().remove();
-      updateLabel.exit().remove();
+      
+      // updateLink.exit().remove();
+      // updateNode.exit().remove();
+      // updateLabel.exit().remove();
+      
     }
-  }, [graph, d3Container.current])
+
+    
+  }, [graph])
 
   return (
     // destroy: () => {

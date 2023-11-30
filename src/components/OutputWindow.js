@@ -1,8 +1,5 @@
-import { useEffect } from 'react';
 import Box from '@mui/material/Box';
-import NetworkDiagramGenerator from './NetworkDiagramGenerator';
 import React, { useRef } from "react";
-import { ForceGraph } from '../components/ForceGraph';
 import RunForceGraph from '../components/ForceGraphGenerator';
 
 
@@ -11,9 +8,9 @@ const OutputWindow = ({graph}) => {
     //     return `<div>${node.name}</div>`;
     //   }, []);
             return (
+                
                 <Box sx={{p: 8}}>
-                    <Box style={{backgroundColor: "#F2F1F1"}} className="parentDiv">
-                            {/* <NetworkDiagramGenerator graph={graph} width={1400} height={1500}/> */}
+                    <Box style={{backgroundColor: "#F2F1F1"}}>
                             <RunForceGraph graph={graph}/>
                     </Box>
                 </Box>

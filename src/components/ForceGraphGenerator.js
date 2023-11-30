@@ -7,8 +7,8 @@ import { useLayoutEffect, useRef } from "react";
 export const RunForceGraph = ( {graph} ) => { 
   const d3Container = useRef(null);
 
-  const height = 1200;
-  const width = 1200; 
+  const height = window.innerHeight;
+  const width = window.innerWidth; 
 
   useLayoutEffect(() => { 
     
@@ -22,7 +22,7 @@ export const RunForceGraph = ( {graph} ) => {
       // var parentDiv = document.getElementById("parentDiv");
       
 
-      const color = () => { return "#9D79A0"; };
+      const color = () => { return "#fc9f42"; };
 
       const drag = (simulation) => {
         const dragstarted = (d) => {
@@ -81,7 +81,7 @@ export const RunForceGraph = ( {graph} ) => {
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("stroke", "#fff")
+        .attr("stroke", "#ff8103")
         .attr("stroke-width", 2)
         .attr("r", 24)
         .attr("fill", color)
@@ -141,7 +141,7 @@ export const RunForceGraph = ( {graph} ) => {
     // nodes: () => {
     //   return svg.node();
     // }
-    <svg width={width} height={height} ref={d3Container}/>
+    <svg width={width} height={height} style={{padding: "1px 1000px 2px -1px"}} ref={d3Container}/>
     
   );
 }

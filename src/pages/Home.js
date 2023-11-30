@@ -1,3 +1,4 @@
+import RunForceGraph from "../components/ForceGraphGenerator";
 import InputWindow from "../components/InputWindow";
 import OutputWindow from "../components/OutputWindow";
 import {useState} from 'react';
@@ -8,7 +9,7 @@ const Home = () => {
     return (
         <div className="Home">
             <InputWindow graph={graph} setGraph={setGraph}/>
-            <OutputWindow graph={graph}/>
+            <RunForceGraph graph={graph}/>
         </div>
     )
 }

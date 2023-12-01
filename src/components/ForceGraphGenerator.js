@@ -2,15 +2,36 @@
 import * as d3 from "d3";
 import styles from "../components/ForceGraph.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useEffect, useState, useRef } from "react";
+import d3ForceBoundary from "d3-force-boundary";
 
-export const RunForceGraph = ( {graph} ) => { 
+export const RunForceGraph = ( {graph, svgContainer} ) => { 
   const d3Container = useRef(null);
+  
 
-  const height = window.innerHeight;
-  const width = window.innerWidth; 
+  // State to track width and height of SVG Container
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
 
-  useLayoutEffect(() => { 
+  // This function calculates width and height of the container
+  const getSvgContainerSize = () => {
+    const newWidth = svgContainer.current.clientWidth - 128;
+    setWidth(newWidth);
+
+    const newHeight = svgContainer.current.clientHeight;
+    setHeight(newHeight);
+  };
+
+  useEffect(() => {
+    // detect 'width' and 'height' on render
+    getSvgContainerSize();
+    // listen for resize changes, and detect dimensions again when they change
+    window.addEventListener("resize", getSvgContainerSize);
+    // cleanup event listener
+    return () => window.removeEventListener("resize", getSvgContainerSize);
+  }, []);
+
+  useEffect(() => { 
     
     if (graph.links && graph.nodes) {
 
@@ -61,6 +82,7 @@ export const RunForceGraph = ( {graph} ) => {
         
       const svg = d3
         .select(d3Container.current)
+        .attr("viewBox", [-width / 2, -height / 2, width, height])
         .call(d3.zoom().on("zoom", function () {
           svg.attr("transform", d3.event.transform);
       }));
@@ -132,7 +154,7 @@ export const RunForceGraph = ( {graph} ) => {
     }
 
     
-  }, [graph])
+  }, [graph, width, height])
 
   return (
     // destroy: () => {
@@ -141,7 +163,7 @@ export const RunForceGraph = ( {graph} ) => {
     // nodes: () => {
     //   return svg.node();
     // }
-    <svg width={width} height={height} style={{padding: "1px 1000px 2px -1px"}} ref={d3Container}/>
+    <svg width={width} height={height} ref={d3Container}/>
     
   );
 }

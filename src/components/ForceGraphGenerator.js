@@ -78,19 +78,21 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .force("x", d3.forceX())
         .force("y", d3.forceY());
 
-        
+      d3.select(d3Container.current).selectAll("*").remove();
         
       const svg = d3
         .select(d3Container.current)
         .attr("viewBox", [-width / 2, -height / 2, width, height])
         .call(d3.zoom().on("zoom", function () {
           svg.attr("transform", d3.event.transform);
-      }));
+      })).append("g");
 
-      svg.selectAll("*").remove();
+	    //   .scaleExtent([0, 5])
+	    //   .translateExtent([[0, 0], [width, height]])
+
+      // svg.selectAll("*").remove();
 
       const updateLink = svg
-        .append("g")
         .selectAll("line")
         .data(links)
         .join("line")
@@ -99,7 +101,6 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .attr("stroke-width", d => Math.sqrt(d.value));
 
       const updateNode = svg
-        .append("g")
         .selectAll("circle")
         .data(nodes)
         .join("circle")
@@ -110,7 +111,6 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .call(drag(simulation));
 
       const updateLabel = svg
-        .append("g")
         .selectAll("text")
         .data(nodes)
         .join("text")
@@ -119,6 +119,7 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .attr('dominant-baseline', 'central')
         .text(d => {return d.id;})
         .call(drag(simulation));
+      
 
       // label.on("mouseover", (d) => {
       //   addTooltip(nodeHoverTooltip, d, d3.event.pageX, d3.event.pageY);

@@ -74,7 +74,7 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .forceSimulation(nodes)
         .force("link", d3.forceLink(links).id(d => d.id).distance(200))
         .force("charge", d3.forceManyBody().strength(-1000))
-        .force("collide", d3.forceCollide().strength(1).radius(30).iterations(1))
+        .force("collide", d3.forceCollide().strength(1).radius(180).iterations(1))
         .force("x", d3.forceX())
         .force("y", d3.forceY());
 
@@ -106,7 +106,7 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .join("circle")
         .attr("stroke", "#ff8103")
         .attr("stroke-width", 2)
-        .attr("r", 24)
+        .attr("r", 54)
         .attr("fill", color)
         .call(drag(simulation));
 
@@ -117,7 +117,7 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .attr("class", "labels")
         .attr('text-anchor', 'middle')
         .attr('dominant-baseline', 'central')
-        .text(d => {return d.id;})
+        .text(d => {return d.properties.neo4jImportId;})
         .call(drag(simulation));
       
 

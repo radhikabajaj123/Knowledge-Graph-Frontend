@@ -1,10 +1,6 @@
 
 import * as d3 from "d3";
-import styles from "../components/ForceGraph.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import { useLayoutEffect, useEffect, useState, useRef } from "react";
-import d3ForceBoundary from "d3-force-boundary";
-
+import { useEffect, useState, useRef } from "react";
 export const RunForceGraph = ( {graph, svgContainer} ) => { 
   const d3Container = useRef(null);
   
@@ -12,6 +8,7 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
   // State to track width and height of SVG Container
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
+  const [mousePosition, setMousePosition ] = useState({ x: null, y: null });
 
   // This function calculates width and height of the container
   const getSvgContainerSize = () => {
@@ -32,18 +29,11 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
   }, []);
 
   useEffect(() => { 
-    
     if (graph.links && graph.nodes) {
 
 
       const links = graph.links.map((d) => Object.assign({}, d));
       const nodes = graph.nodes.map((d) => Object.assign({}, d));
-
-      
-      // var parentDiv = document.getElementById("parentDiv");
-      
-
-      const color = () => { return "#fc9f42"; };
 
       const drag = (simulation) => {
         const dragstarted = (d) => {
@@ -87,10 +77,17 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
           svg.attr("transform", d3.event.transform);
       })).append("g");
 
-	    //   .scaleExtent([0, 5])
-	    //   .translateExtent([[0, 0], [width, height]])
-
-      // svg.selectAll("*").remove();
+      const tooltip = d3.select("body")
+        .append("div")
+        .style("position", "absolute")
+        .style("visibility", "hidden")
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-color", "#999")
+        .style("border-width", "2px")
+        .style("border-radius", "5px")
+        .style("padding", "4px");
+        
 
       const updateLink = svg
         .selectAll("line")
@@ -98,16 +95,33 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .join("line")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
-        .attr("stroke-width", d => Math.sqrt(d.value));
+        .attr("stroke-width", "4px");
 
       const updateNode = svg
         .selectAll("circle")
         .data(nodes)
         .join("circle")
         .attr("stroke", "#ff8103")
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 4)
         .attr("r", 54)
-        .attr("fill", color)
+        .attr("fill", "#fc9f42")
+        .on("mouseover", function(d) {
+          tooltip.style("visibility", "visible")
+            .html("<p style='font-size: 8px; color: #4b4b4b' ><b>Id: </b>" + d.id + "<br><b>Labels: </b>" + d.labels + "<br><b>ImportId: </b>" + d.properties.neo4jImportId + "<br><b>Name: </b>" + d.properties.name + "</p>")
+            d3.select(this)
+              .style("stroke", "#d4d4d4")
+              .style("stroke-width", "8px")
+        }) .on("mousemove", function() {
+          tooltip
+            .style("top", d3.event.pageY + "px")
+            .style("left", d3.event.pageX + "px")
+        }) .on("mouseleave", function() {
+          tooltip
+            .style("visibility", "hidden")
+            d3.select(this)
+              .style("stroke", "#ff8103")
+              .style("stroke-width", "4px");
+        })
         .call(drag(simulation));
 
       const updateLabel = svg
@@ -117,16 +131,10 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .attr("class", "labels")
         .attr('text-anchor', 'middle')
         .attr('dominant-baseline', 'central')
+        .attr("fill", "#4b4b4b")
         .text(d => {return d.properties.neo4jImportId;})
         .call(drag(simulation));
-      
 
-      // label.on("mouseover", (d) => {
-      //   addTooltip(nodeHoverTooltip, d, d3.event.pageX, d3.event.pageY);
-      // })
-      //   .on("mouseout", () => {
-      //     removeTooltip();
-      //   });
 
       simulation.on("tick", () => {
 

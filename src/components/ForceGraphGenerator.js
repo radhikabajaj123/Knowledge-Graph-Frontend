@@ -96,7 +96,7 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .attr("markerWidth", 6)
         .attr("markerHeight", 6)
         .attr("orient", "auto")
-        .append("svg:path")
+        .append("path")
         .attr("d", "M0,-5L10,0L0,5");
 
       const updateLink = svg
@@ -107,7 +107,8 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .attr("stroke-opacity", 0.6)
         .attr("stroke-width", "4px")
         .attr("fill", "#4b4b4b")
-        .attr("marker-end", "url(#arrow)");
+        .attr("marker-end", "url(#arrow)")
+        .call(drag(simulation));
 
         const updateLinkLabel = svg.append("g")
         .selectAll("text")
@@ -115,12 +116,73 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .join("text")
         .attr('text-anchor', 'middle')
         .attr("dx", 20)
-        .attr("dy", 0)
+        .attr("dy", -7)
         .attr('dominant-baseline', 'central')
         .attr("fill", "#4b4b4b")
         .text(d => { return d.type; })
         .call(drag(simulation));
-        
+
+      // const path = svg
+      //   .selectAll("path")
+      //   .data(links)
+      //   .enter()
+      //   .append("path")
+      //   .attr("class", d => {return "link " + d.type; })
+      //   .attr("id", function(d, i) {return "linkId_" + i;})
+      //   .attr("marker-end", "url(#arrow)");
+
+      // const linktext = svg.append("g").selectAll("g.linklabelholder").data(links);
+
+      // linktext
+      //   .enter()
+      //   .append("g")
+      //   .attr("class", "linklabelholder")
+      //   .append("text")
+      //   .attr("x", "50")
+      //   .attr("y", "-20")
+      //   .attr("text-anchor", "start")
+      //   .style("fill", "#4b4b4b")
+      //   .append("textpath")
+      //   .attr("xlink:href", function (d, i) {return "#linkId_" + i;})
+      //   .text(d => {return d.type; });
+
+      // const edges = svg.selectAll("line")
+      //   .data(links)
+      //   .join("line")
+      //   .attr("id", function (d) { return 'edge' + d.identity })
+      //   .style("stroke", "#ccc");
+
+      // const edgepaths = svg.selectAll(".edgepath")
+      //   .data(links)
+      //   .join('path')
+      //   .attr({
+      //       'd': function (d) { return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y },
+      //       'class': 'edgepath',
+      //       'fill-opacity': 0,
+      //       'stroke-opacity': 0,
+      //       'fill': 'blue',
+      //       'stroke': 'red',
+      //       'id': function (d) { return 'edgepath' + d.identity }
+      //   });
+
+      // const edgelabels = svg.selectAll(".edgelabel")
+      //   .data(links)
+      //   .join('text')
+      //   .attr({
+      //       'class': 'edgelabel',
+      //       'id': function (d) { return 'edgelabel' + d.identity },
+      //       'dx': 80,
+      //       'dy': 0,
+      //       'font-size': 10,
+      //       'fill': '#aaa'
+      //   });
+
+      // edgelabels.append('textPath')
+      //   .data(links)
+      //   .attr('xlink:href', function (d) { return '#edgepath' + d.identity })
+      //   .style("pointer-events", "none")
+      //   .text(function (d) { return d.type });
+          
 
       const updateNode = svg
         .selectAll("circle")
@@ -161,6 +223,30 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
 
 
       simulation.on("tick", () => {
+        // edges.attr({
+        //   "x1": function (d) { return d.source.x; },
+        //   "y1": function (d) { return d.source.y; },
+        //   "x2": function (d) { return d.target.x; },
+        //   "y2": function (d) { return d.target.y; }
+        // });
+
+        // edgepaths.attr('d', function (d) {
+        //   const path = 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
+          
+        //   return path
+        // });
+
+        // edgelabels.attr('transform', function (d) {
+        //   if (d.target.x < d.source.x) {
+        //       const rx = width / 2;
+        //       const ry = height / 2;
+        //       return 'rotate(180 ' + rx + ' ' + ry + ')';
+        //   }
+        //   else {
+        //       return 'rotate(0)';
+        //   }
+        // });
+
         // update link positions
         updateLink
           .attr("x1", d => d.source.x)
@@ -169,8 +255,24 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
           .attr("y2", d => d.target.y);
 
         updateLinkLabel
-        .attr("x", function(d) { return d.source.x + (d.target.x - d.source.x)/2; })
-        .attr("y", function(d) { return d.source.y + (d.target.y - d.source.y)/2; })
+        .attr("transform", function(d) {
+          var xDiff = d.source.x - d.target.x; 
+          var yDiff = d.source.y - d.target.y; 
+          var angle = Math.atan2(yDiff, xDiff) * (180.0 / Math.PI);
+          //var angle = 0;
+          
+          return "translate(" + (d.source.x + d.target.x) / 2 + ","
+          + (d.source.y + d.target.y) / 2 + ")rotate(" + angle + ")"; 
+        });;
+
+
+        // // update link positions
+        // path
+        //   .attr("x1", d => d.source.x)
+        //   .attr("y1", d => d.source.y)
+        //   .attr("x2", d => d.target.x)
+        //   .attr("y2", d => d.target.y);
+      
 
         // update node positions
         updateNode

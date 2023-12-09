@@ -8,7 +8,6 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
   // State to track width and height of SVG Container
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
-  const [mousePosition, setMousePosition ] = useState({ x: null, y: null });
 
   // This function calculates width and height of the container
   const getSvgContainerSize = () => {
@@ -81,13 +80,24 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .append("div")
         .style("position", "absolute")
         .style("visibility", "hidden")
-        .style("background-color", "white")
+        .style("background-color", "#fbfbfb")
         .style("border", "solid")
         .style("border-color", "#999")
         .style("border-width", "2px")
         .style("border-radius", "5px")
         .style("padding", "4px");
         
+      svg.append("defs").append("marker")
+        .attr("id", "arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 32)
+        .attr("refY", 0)
+        .attr("fill", "#999")
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("svg:path")
+        .attr("d", "M0,-5L10,0L0,5");
 
       const updateLink = svg
         .selectAll("line")
@@ -95,7 +105,22 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         .join("line")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
-        .attr("stroke-width", "4px");
+        .attr("stroke-width", "4px")
+        .attr("fill", "#4b4b4b")
+        .attr("marker-end", "url(#arrow)");
+
+        const updateLinkLabel = svg.append("g")
+        .selectAll("text")
+        .data(links)
+        .join("text")
+        .attr('text-anchor', 'middle')
+        .attr("dx", 20)
+        .attr("dy", 0)
+        .attr('dominant-baseline', 'central')
+        .attr("fill", "#4b4b4b")
+        .text(d => { return d.type; })
+        .call(drag(simulation));
+        
 
       const updateNode = svg
         .selectAll("circle")
@@ -124,11 +149,10 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
         })
         .call(drag(simulation));
 
-      const updateLabel = svg
+      const updateNodeLabel = svg.append("g")
         .selectAll("text")
         .data(nodes)
         .join("text")
-        .attr("class", "labels")
         .attr('text-anchor', 'middle')
         .attr('dominant-baseline', 'central')
         .attr("fill", "#4b4b4b")
@@ -137,7 +161,6 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
 
 
       simulation.on("tick", () => {
-
         // update link positions
         updateLink
           .attr("x1", d => d.source.x)
@@ -145,15 +168,19 @@ export const RunForceGraph = ( {graph, svgContainer} ) => {
           .attr("x2", d => d.target.x)
           .attr("y2", d => d.target.y);
 
+        updateLinkLabel
+        .attr("x", function(d) { return d.source.x + (d.target.x - d.source.x)/2; })
+        .attr("y", function(d) { return d.source.y + (d.target.y - d.source.y)/2; })
+
         // update node positions
         updateNode
           .attr("cx", d => d.x)
           .attr("cy", d => d.y);
 
         // update label positions
-        updateLabel
+        updateNodeLabel
           .attr("x", d => { return d.x; })
-          .attr("y", d => { return d.y; })
+          .attr("y", d => { return d.y; });
       });
       
       // updateLink.exit().remove();

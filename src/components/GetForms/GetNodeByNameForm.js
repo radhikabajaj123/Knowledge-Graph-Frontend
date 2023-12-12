@@ -16,7 +16,7 @@ const GetNodeByNameForm = ({graph, setGraph}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError('');
-        const response = await fetch(`http://localhost:9092/get-node-by-name?name=${name}`);
+        const response = await fetch(`http://localhost:9092/get-node-by-name?name=${encodeURIComponent(name)}`);
 
         if (response.ok) {
             const data = await response.json();
@@ -34,7 +34,7 @@ const GetNodeByNameForm = ({graph, setGraph}) => {
     //     event.preventDefault();
     //     setError('');
         
-    //     const response = await fetch(`http://localhost:9092/get-node-by-importId?importId=${importId}`);
+    //     const response = await fetch(`http://localhost:9092/get-node-by-name/{${name}}`);
     //     if (response.ok) {
     //         const data = await response.json();
     //         setGraph({

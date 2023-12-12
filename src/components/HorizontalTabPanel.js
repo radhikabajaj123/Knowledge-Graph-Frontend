@@ -51,9 +51,9 @@ export default function BasicTabs({graph, setGraph}) {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Get" {...a11yProps(0)} />
-          <Tab label="Add" {...a11yProps(1)} />
+          {/* <Tab label="Add" {...a11yProps(1)} />
           <Tab label="Edit" {...a11yProps(2)} />
-          <Tab label="Delete" {...a11yProps(3)} />
+          <Tab label="Delete" {...a11yProps(3)} /> */}
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

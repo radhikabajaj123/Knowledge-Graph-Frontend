@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import React, { useRef } from "react";
-import RunForceGraph from '../components/ForceGraphGenerator';
+import RunForceGraph from '../components/ForceGraph';
 
 
 const OutputWindow = ({graph}) => {
